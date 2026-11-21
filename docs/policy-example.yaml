@@ -1,0 +1,37 @@
+# Пример политики (черновик схемы, version: 1)
+version: 1
+git:
+  url: https://github.com/me/infra.git
+  branch: main
+  poll_interval: 60s
+registries:
+  - name: ghcr
+    kind: ghcr            # dockerhub | ghcr | gitea | forgejo
+    host: ghcr.io
+    username_env: GHCR_USER
+    token_env: GHCR_TOKEN
+stacks:
+  - name: blog
+    project: blog
+    compose_file: stacks/blog/compose.yaml
+    resources:
+      volumes: keep       # keep | recreate
+      networks: keep      # external-сети не трогаются никогда
+    services:
+      web:
+        image: ghcr.io/me/blog
+        track: { semver: "^1.2" }   # tag: latest | semver | digest
+        triggers: [poll, webhook]
+        poll_interval: 5m
+        stable_for: 30s               # daemon: новый digest должен продержаться без изменений
+        approval: auto                # auto | manual
+        strategy: recreate            # зарезервировано: blue_green
+        healthcheck:
+          source: image               # image | custom | none
+          timeout: 60s
+        rollback: { on_failure: true }
+webhook:
+  listen: 127.0.0.1:9000
+  secret_env: DCD_WEBHOOK_SECRET
+state:
+  history_file: ~/.local/state/dcd/history.jsonl   # опционально
