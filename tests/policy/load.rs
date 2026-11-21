@@ -3,7 +3,7 @@ use std::path::Path;
 use dcd::error::Error;
 use dcd::policy::load::{from_file, from_str};
 
-const SERVICE: &str = r#"
+const SERVICE: &str = r"
 version: 1
 stacks:
   - name: blog
@@ -12,7 +12,7 @@ stacks:
       web:
         image: ghcr.io/me/blog
         track: { tag: latest }
-"#;
+";
 
 fn error_of(yaml: &str) -> String {
     from_str(yaml).unwrap_err().to_string()

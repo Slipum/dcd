@@ -1,26 +1,24 @@
 [package]
-name = "dcd"                       # рабочее название
+name = "dcd"
 version = "0.1.0"
 edition = "2024"
 rust-version = "1.85"
 license = "Apache-2.0"
-description = "GitOps-CD для Docker Compose без Kubernetes"
+description = "GitOps-CD for Docker Compose without Kubernetes"
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
-serde_norway = "0.9"   # форк serde_yaml (оригинал заархивирован)
+serde_norway = "0.9"
 thiserror = "2"
 
 [lints.rust]
 unsafe_code = "forbid"
 
 [lints.clippy]
-# Базовый уровень: pedantic как предупреждения (CI запускает с -D warnings)
 pedantic = { level = "warn", priority = -1 }
-module_name_repetitions = "allow"        # шумный pedantic-lint, имена вида policy::Policy допустимы
+module_name_repetitions = "allow"
 
-# Ограничения проекта: нарушение = ошибка компиляции и красная подсветка в IDE
-too_many_lines = "deny"                    # функция <= 30 строк (порог в clippy.toml)
+too_many_lines = "deny"
 cognitive_complexity = "deny"
 too_many_arguments = "deny"
 excessive_nesting = "deny"
@@ -30,10 +28,9 @@ panic = "deny"
 todo = "deny"
 unimplemented = "deny"
 dbg_macro = "deny"
-print_stdout = "deny"                      # вывод только через модуль output
+print_stdout = "deny"
 print_stderr = "deny"
-mod_module_files = "deny"                  # без mod.rs: `foo.rs` + папка `foo/`
+mod_module_files = "deny"
 
-# Запрет обхода правил: #[allow] нельзя, только #[expect(..., reason = "...")]
 allow_attributes = "deny"
 allow_attributes_without_reason = "deny"

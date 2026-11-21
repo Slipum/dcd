@@ -8,7 +8,7 @@ use dcd::policy::stacks::stack::ResourceMode;
 use dcd::policy::types::interval::Interval;
 use dcd::policy::types::track::Track;
 
-const SERVICE_ONLY: &str = r#"
+const SERVICE_ONLY: &str = r"
 version: 1
 stacks:
   - name: blog
@@ -17,7 +17,7 @@ stacks:
       web:
         image: ghcr.io/me/blog
         track: { tag: latest }
-"#;
+";
 
 const FULL: &str = r#"
 version: 1
